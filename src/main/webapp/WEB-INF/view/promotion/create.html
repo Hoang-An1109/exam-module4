@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout :: head">
     <title>Create Promotion</title>
+    <meta charset="UTF-8">
 
     .message-error {
     color: red;
     display: block;
     margin-bottom: 15px;
+    font-family: Arial, sans-serif;
     }
 </head>
 <body>
@@ -15,7 +17,7 @@
     <a th:href="@{/promotions}">Back to promotion list</a>
 </p>
 <div id="form">
-    <form th:action="@{/promotions/create}" th:object="${promotion}" method="POST" novalidate="novalidate" enctype="multipart/form-data">
+    <form th:action="@{/promotions/create}" th:object="${promotions}" method="POST" novalidate="novalidate" >
         <input type="hidden" th:field="*{id}"/>
 
         <div>

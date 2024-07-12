@@ -42,8 +42,8 @@
         <td th:text="${p.timeEnd}"></td>
         <td th:text="${p.discount}"></td>
         <td th:text="${p.details}"></td>
-        <td><a th:href="@{/promotion/update/{id}(id=${p.getId()})}">update</a></td>
-        <td><a th:href="@{/promotion/delete/{id}(id=${p.getId()})}">delete</a></td>
+        <td><a th:href="@{/promotions/update/{id}(id=${p.getId()})}">update</a></td>
+        <td><a th:href="@{/promotions/delete/{id}(id=${p.getId()})}">delete</a></td>
     </tr>
     </tbody>
 </table>

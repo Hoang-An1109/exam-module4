@@ -56,18 +56,13 @@ public class Promotion implements Validator {
         Promotion promotion = (Promotion) target;
 
         String header = promotion.getHeader();
-        Date timeStart = promotion.getTimeStart();
-        Date timeEnd = promotion.getTimeEnd();
-        double discount = promotion.getDiscount();
-        String details = promotion.getDetails();
-
         ValidationUtils.rejectIfEmpty(errors,"header","header.empty");
+        if (header.length() > 100){
+            errors.rejectValue("header", "header.length");
+        }
+
+        Date timeStart = promotion.getTimeStart();
         ValidationUtils.rejectIfEmpty(errors,"timeStart","timeStart.empty");
-        ValidationUtils.rejectIfEmpty(errors,"timeEnd","timeEnd.empty");
-        ValidationUtils.rejectIfEmpty(errors,"discount","discount.empty");
-        ValidationUtils.rejectIfEmpty(errors,"details","details.empty");
-
-
         if (timeStart != null) {
             Instant instantStart = timeStart.toInstant();
             LocalDate startDate = instantStart.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -77,8 +72,9 @@ public class Promotion implements Validator {
             }
         }
 
-
-        if (timeEnd != null) {
+        Date timeEnd = promotion.getTimeEnd();
+        ValidationUtils.rejectIfEmpty(errors,"timeEnd","timeEnd.empty");
+        if (timeEnd != null || timeStart != null) {
             LocalDate startDate = timeStart.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Instant instantEnd = timeEnd.toInstant();
             LocalDate endDate = instantEnd.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -87,9 +83,14 @@ public class Promotion implements Validator {
             }
         }
 
+        double discount = promotion.getDiscount();
+        ValidationUtils.rejectIfEmpty(errors,"discount","discount.empty");
         if (discount < 10000 ) {
             errors.rejectValue("discount", "discount.range");
         }
+
+//        String details = promotion.getDetails();
+        ValidationUtils.rejectIfEmpty(errors,"details","details.empty");
     }
 
     public Long getId() {
